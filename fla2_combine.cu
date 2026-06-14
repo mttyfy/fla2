@@ -119,16 +119,16 @@ __global__ void __launch_bounds__ (WARP_SIZE * mma_tile_q * mma_tile_k)
                 (Q_smem_br_new * (mma_k + padq ))+ 
                 swizzle<mma_k>(Q_smem_br_new,Q_smem_k_new % mma_k)
                 ) * sizeof(half));
-                if (Q_br_id==0&&batch_id==0&&head_id==0) {
-                     printf(
-                        "tid=%d lane=%d i=%d "
-                        "Q_smem_br=%d Q_smem_k=%d "
-                        "Q_smem_addr=%u 0x%x \n",
-                        tid, lane_id, i,
-                        Q_smem_br, Q_smem_k,
-                        Q_smem_addr
-                    );
-                }
+                //////if (Q_br_id==0&&batch_id==0&&head_id==0) {
+                //////         printf(
+                //////        "tid=%d lane=%d i=%d "
+                //////        "Q_smem_br=%d Q_smem_k=%d "
+                //////        "Q_smem_addr=%u 0x%x \n",
+                //////        tid, lane_id, i,
+                //////        Q_smem_br, Q_smem_k,
+                //////        Q_smem_addr
+                //////    );
+                //////}
                 half * Q_gmem_addr = 
                 &Q[Q_gmem_offset +  (Q_br_id * br + Q_smem_br_new) * head_dim
                 + Q_smem_k_new ];     

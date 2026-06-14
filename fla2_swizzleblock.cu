@@ -117,20 +117,20 @@ __global__ void __launch_bounds__ (WARP_SIZE * mma_tile_q * mma_tile_k)
                 swizzle_with_block<mma_k>((Q_smem_k+i)/mma_k,Q_smem_br,
                 (Q_smem_k + i) % mma_k)) 
                 * sizeof(half));
-                if (i==0&&Q_br_id==0&&batch_id==0&&head_id==0) {
-                    uint32_t tmp_bank_id = (Q_smem_addr % 128) / 4;
-                    uint32_t tmp_bank_row_id = Q_smem_addr / 128;
-                  printf(
-                        "tid=%d lane=%d i=%d "
-                        "Q_smem_br=%d Q_smem_k=%d "
-                       "Q_smem_addr=%u 0x%x "  
-                       "bank_id=%u " "bank_row_id=%u \n",
-                        tid, lane_id, i,
-                        Q_smem_br, Q_smem_k,
-                        Q_smem_addr,Q_smem_addr
-                        ,tmp_bank_id,tmp_bank_row_id
-                    );
-                }
+                //////if (i==0&&Q_br_id==0&&batch_id==0&&head_id==0) {
+                //////    uint32_t tmp_bank_id = (Q_smem_addr % 128) / 4;
+                //////    uint32_t tmp_bank_row_id = Q_smem_addr / 128;
+                //////  printf(
+                //////        "tid=%d lane=%d i=%d "
+                //////        "Q_smem_br=%d Q_smem_k=%d "
+                //////       "Q_smem_addr=%u 0x%x "  
+                //////       "bank_id=%u " "bank_row_id=%u \n",
+                //////        tid, lane_id, i,
+                //////        Q_smem_br, Q_smem_k,
+                //////        Q_smem_addr,Q_smem_addr
+                //////        ,tmp_bank_id,tmp_bank_row_id
+                //////    );
+                //////}
                 CP_ASYNC_CG(Q_smem_addr , &Q[Q_gmem_addr + i] , 16);
             }
             CP_ASYNC_COMMIT_GROUP();
